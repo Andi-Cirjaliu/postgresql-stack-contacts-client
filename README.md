@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+To run the application you need to specify the URL of the server in .env file. For example: REACT_APP_SERVER_URL=http://localhost:4000/contacts
+
 ## Available Scripts
 
 In the project directory, you can run:
