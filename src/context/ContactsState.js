@@ -5,6 +5,8 @@ import {GET_CONTACTS, ADD_CONTACT, UPDATE_CONTACT, DELETE_CONTACT, CONTACT_ERROR
 import contactsReducer from './contactsReducer';
 import ContactsContext from './contactsContext';
 
+const SERVER_URL=process.env.REACT_APP_SERVER_URL;
+
 const ContactsState = (props) => {
   const INITIAL_STATE = {
     contacts: [],
@@ -22,7 +24,7 @@ const ContactsState = (props) => {
     setLoading();
 
     try {
-      const res = await axios.get("/contacts");
+      const res = await axios.get(`${SERVER_URL}`);
       const data = res.data;
       console.log(data);
 
@@ -40,7 +42,7 @@ const ContactsState = (props) => {
     setLoading();
 
     try {
-      const res = await axios.post("/contacts", contact, {
+      const res = await axios.post(`${SERVER_URL}`, contact, {
         headers: { "Content-Type": "application/json" },
       });
       const data = res.data;
@@ -60,7 +62,7 @@ const ContactsState = (props) => {
     setLoading();
 
     try {
-      const res = await axios.put(`/contacts/${contact.id}`, contact, {
+      const res = await axios.put(`${SERVER_URL}/${contact.id}`, contact, {
         headers: { "Content-Type": "application/json" },
       });
       const data = res.data;
@@ -80,7 +82,7 @@ const ContactsState = (props) => {
     setLoading();
 
     try {
-      const res = await axios.delete(`/contacts/${id}`);
+      const res = await axios.delete(`${SERVER_URL}/${id}`);
       const data = res.data;
       console.log(data);
 
