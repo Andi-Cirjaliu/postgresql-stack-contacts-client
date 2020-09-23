@@ -1,7 +1,17 @@
 import React, {useReducer} from 'react';
 import axios from 'axios';
 
-import {GET_CONTACTS, ADD_CONTACT, UPDATE_CONTACT, DELETE_CONTACT, CONTACT_ERROR, SET_LOADING, SET_CURRENT, CLEAR_CURRENT} from './types';
+import {
+  GET_CONTACTS,
+  ADD_CONTACT,
+  UPDATE_CONTACT,
+  DELETE_CONTACT,
+  SET_ERROR,
+  CLEAR_ERROR,
+  SET_LOADING,
+  SET_CURRENT,
+  CLEAR_CURRENT,
+} from "./types";
 import contactsReducer from './contactsReducer';
 import ContactsContext from './contactsContext';
 
@@ -31,7 +41,7 @@ const ContactsState = (props) => {
       dispatch({ type: GET_CONTACTS, payload: data });
     } catch (error) {
       console.error(error.response);
-      dispatch({ type: CONTACT_ERROR, payload: error.response.data.msg });
+      setError(error.response.data.msg);
     }
   };
 
@@ -51,7 +61,7 @@ const ContactsState = (props) => {
       dispatch({ type: ADD_CONTACT, payload: data });
     } catch (error) {
       console.error(error.response);
-      dispatch({ type: CONTACT_ERROR, payload: error.response.data.msg });
+      setError(error.response.data.msg);
     }
   };
 
@@ -71,7 +81,7 @@ const ContactsState = (props) => {
       dispatch({ type: UPDATE_CONTACT, payload: data });
     } catch (error) {
       console.error(error.response);
-      dispatch({ type: CONTACT_ERROR, payload: error.response.data.msg });
+      setError(error.response.data.msg);
     }
   };
 
@@ -89,9 +99,22 @@ const ContactsState = (props) => {
       dispatch({ type: DELETE_CONTACT, payload: id });
     } catch (error) {
       console.error(error.response);
-      dispatch({ type: CONTACT_ERROR, payload: error.response.data.msg });
+      setError(error.response.data.msg);
     }
   };
+
+  //set error
+  const setError = (message) => {
+    dispatch({ type: SET_ERROR, payload: message });
+
+    //clear the error after 5 seconds
+    setTimeout( () => clearError(), 5000);
+  };
+
+  //clear error
+  const clearError = () => {
+    dispatch({ type: CLEAR_ERROR });
+  }
 
   //set loading
   const setLoading = () => {

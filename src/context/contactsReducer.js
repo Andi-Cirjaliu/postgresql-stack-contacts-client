@@ -3,7 +3,8 @@ import {
   ADD_CONTACT,
   UPDATE_CONTACT,
   DELETE_CONTACT,
-  CONTACT_ERROR,
+  SET_ERROR,
+  CLEAR_ERROR,
   SET_LOADING,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -12,6 +13,8 @@ import {
 export default (state, action) => {
   let newContacts;
   let id;
+
+  console.log('state: ', state, ', action: ', action);
 
   switch (action.type) {
     case GET_CONTACTS:
@@ -29,8 +32,10 @@ export default (state, action) => {
       id = action.payload;
       newContacts = [...state.contacts].filter((contact) => contact.id !== id);
       return { ...state, contacts: newContacts, loading: false };
-    case CONTACT_ERROR:
+    case SET_ERROR:
       return { ...state, loading: false, error: action.payload };
+    case CLEAR_ERROR:
+      return { ...state, error: null };
     case SET_LOADING:
       return { ...state, loading: true };
     case SET_CURRENT:
